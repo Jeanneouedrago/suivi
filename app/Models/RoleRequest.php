@@ -14,6 +14,7 @@ class RoleRequest extends Model
         'name',
         'role_demande',
         'justification',
+        'piece_jointe',
         'statut',
     ];
 

@@ -24,6 +24,7 @@ class FournisseurController extends Controller
         ->get();
 
     return view('dashboardfournisseur', compact('colis', 'statuts', 'parMois'));
+
 }
 
 

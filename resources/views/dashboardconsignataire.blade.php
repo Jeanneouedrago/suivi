@@ -35,25 +35,9 @@
             </svg>
             Dashboard
             </a>
-        <!-- Gestion des colis déroulant -->
-        <div>
-            <button @click="openColis = !openColis" class="flex items-center gap-3 text-lg font-semibold hover:underline w-full">
-                <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <rect x="3" y="7" width="18" height="13" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 3v4M8 3v4"></path>
-                </svg>
-                Gestion des colis
-                <svg :class="{'rotate-180': openColis}" class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
-                </svg>
-            </button>
-            <div x-show="openColis" x-transition class="pl-8 mt-2 space-y-2">
-                 <a href="#" class="block text-base hover:underline">Ajouter des colis</a>
-                <a href="#" class="block text-base hover:underline">Liste des colis</a>
-            </div>
-        </div>
+       
         <!-- Notifications -->
-            <a href="#" class="flex items-center gap-3 text-lg font-semibold hover:underline">
+            <a href="{{ route('notifications.create') }}" class="flex items-center gap-3 text-lg font-semibold hover:underline">
             <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
             </svg>
@@ -113,7 +97,7 @@
                         <th class="border p-2">Volume</th>
                         <th class="border p-2">Taille</th>
                         <th class="border p-2">Statut</th>
-                        <th class="border p-2">Date de depart</th>
+                        <th class="border p-2">Date de départ</th>
                         <th class="border p-2">Date d’arrivée</th>
                     </tr>
                 </thead>
@@ -123,7 +107,7 @@
                             <td class="border p-2">{{ $c->reference }}</td>
                             <td class="border p-2">{{ $c->volume }}</td>
                             <td class="border p-2">{{ $c->taille }}</td>
-                            <td class="border p-2">{{ $c->Statut }}</td>
+                            <td class="border p-2">{{ $c->statut }}</td>
                             <td class="border p-2">{{ $c->date_depart }}</td>
                             <td class="border p-2">{{ $c->date_arrivee }}</td>
                         </tr>

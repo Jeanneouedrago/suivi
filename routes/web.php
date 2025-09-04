@@ -8,6 +8,7 @@ use App\Http\Controllers\RoleChangeController;
 use App\Http\Controllers\RoleRequestController;
 use App\Http\Controllers\ColisController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\ConsignataireController;
@@ -20,10 +21,6 @@ Route::get('/', function () {
 
 Route::get('/dashboard1', [DashboardController::class, 'index'])->name('dashboard');
 
-
-//Route::get('/dashboard', function () {
-    //return view('dashboard');
-//})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Auth routes (doivent être accessibles sans être connecté)
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -53,9 +50,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-//Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'dashboard'])
-    // ->middleware('auth')
-    // ->name('admin.dashboard');
 
 
 
@@ -80,17 +74,11 @@ Route::middleware(['auth'])->group(function () {
 
 // Gestion des demandes de rôle
 
-//Route::get('/gestion-roles', [RoleRequestController::class, 'index'])->name('role.index');
-//Route::post('/gestion-roles/accept/{id}', [RoleRequestController::class, 'accept'])->name('role.accept');
-//Route::post('/gestion-roles/refuse/{id}', [RoleRequestController::class, 'refuse'])->name('role.refuse');
-
 // Route pour la redirection après demande de rôle
 Route::get('/role.request', [RoleRequestController::class, 'index'])->name('role.request');
 
 
 // routes changement de rôle
-//Route::post('/role-change', [RoleChangeRequestController::class, 'store'])->name('role-change.store');
-//Route::get('/admin/role-requests', [RoleChangeRequestController::class, 'index'])->name('role-change.index');
 
 
 // routes gestionnaire des demandes de rôle
@@ -102,6 +90,13 @@ Route::post('/role.requests/{id}/accept', [RoleRequestController::class, 'accept
 Route::post('/role.requests/{id}/refuse', [RoleRequestController::class, 'refuse'])->name('role.refuse');
 
 
+//Route::get('/role.requests/{id}/download', [RoleRequestController::class, 'download'])->name('role-requests.download');
+
+Route::get('/role-requests/{id}/download', [RoleRequestController::class, 'download'])
+     ->name('role-requests.download');
+
+
+
 //Route colis
 Route::get('/colis.create', [ColisController::class, 'create'])->name('colis.create');
 Route::post('/colis', [ColisController::class, 'store'])->name('colis.store');
@@ -111,7 +106,29 @@ Route::get('/colis', [App\Http\Controllers\ColisController::class, 'index'])->na
 
 Route::get('/colis/{id}', [ColisController::class, 'show'])->name('colis.show');
 
-//Route::resource('colis', ColisController::class);
+
+
+
+
+
+// Routes pour les notifications
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notifications/create', [NotificationController::class, 'create'])->name('notifications.create');
+    Route::post('/notifications', [NotificationController::class, 'store'])->name('notifications.store');
+
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/notifications/read/{id}', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+
+    Route::get('/notifications/map/{id}', [NotificationController::class, 'showMap'])->name('notifications.showMap');
+
+    Route::get('/notifications/unread-count', function () {
+        $count = \App\Models\Notification::where('receiver_id', Auth::id())
+            ->where('is_read', false)
+            ->count();
+        return response()->json(['count' => $count]);
+    });
+});
 
 
 

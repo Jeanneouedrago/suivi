@@ -23,5 +23,32 @@ public function index()
         ->get();
 
     return view('dashboard', compact('colis', 'statuts', 'parMois'));
+
+
+    //Notification 
+    //$notifications = Notification::where('user_id', auth()->id())
+       // ->orderBy('created_at', 'desc')
+      //  ->get();
+
+    //$unreadCount = Notification::where('user_id', auth()->id())
+       // ->where('is_read', false)
+       // ->count();
+
+    //return view('client.dashboard', compact('notifications', 'unreadCount'));
+
+
+}
+
+public function dashboardClient()
+{
+    $notifications = Notification::where('user_id', auth()->id())
+        ->latest()
+        ->get();
+
+    $unreadCount = Notification::where('user_id', auth()->id())
+        ->where('is_read', false)
+        ->count();
+
+    return view('dashboard', compact('notifications', 'unreadCount'));
 }
 }

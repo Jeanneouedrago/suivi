@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('reference')->unique();
             $table->string('volume');
             $table->string('taille');
-            $table->string('statut');
+            $table->enum('statut', ['en_transit', 'livre', 'arrive']);
             $table->date('date_depart');
             $table->date('date_arrivee');
             $table->timestamps();

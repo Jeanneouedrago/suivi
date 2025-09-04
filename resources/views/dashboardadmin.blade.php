@@ -34,22 +34,7 @@
                 </svg>
                 Dashboard Admin
             </a>
-            <!-- Gestion des colis -->
-            <div>
-                <button @click="openColis = !openColis" class="flex items-center gap-3 text-lg font-semibold hover:underline w-full">
-                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <rect x="3" y="7" width="18" height="13" rx="2" stroke-linecap="round" stroke-linejoin="round"></rect>
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 3v4M8 3v4"></path>
-                    </svg>
-                    Gestion des colis
-                    <svg :class="{'rotate-180': openColis}" class="w-4 h-4 ml-auto transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </button>
-                <div x-show="openColis" x-transition class="pl-8 mt-2 space-y-2">
-                    <a href="{{ route('colis.index') }}" class="block text-base hover:underline">Liste des colis</a>
-                </div>
-            </div>
+                  
             <!-- Déconnexion -->
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
@@ -60,6 +45,16 @@
                     Déconnexion
                 </button>
             </form>
+            <!-- Profil -->
+            <div style="margin-top: 2rem;">
+                <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 text-lg font-semibold hover:underline">
+                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="4" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 20c0-2.21 3.58-4 6-4s6 1.79 6 4" />
+                </svg>
+                    Mon Profil
+                </a>
+            </div>
         </nav>
     </aside>
 
@@ -95,6 +90,7 @@
                         <th class="border border-gray-400 px-4 py-2">Rôle demandé</th>
                         <th class="border border-gray-400 px-4 py-2">Statut</th>
                         <th class="border border-gray-400 px-4 py-2">Justification</th>
+                        <th class="border border-gray-400 px-4 py-2">Pièce jointe</th>
                         <th class="border border-gray-400 px-4 py-2">Actions</th>
                     </tr>
                 </thead>
@@ -105,6 +101,16 @@
                             <td class="border px-4 py-2">{{ $req->role_demande }}</td>
                             <td class="border px-4 py-2">{{ $req->statut }}</td>
                             <td class="border px-4 py-2">{{ $req->justification }}</td>
+                      <td>
+                        @if($req->piece_jointe)
+                            <a href="{{ route('role-requests.download', $req->id) }}" class="btn btn-sm btn-info">
+                                Télécharger
+                            </a>
+                        @else
+                            <span class="text-muted">Aucun fichier</span>
+                        @endif
+                    </td>
+    
                             <td class="border px-4 py-2 space-x-2">
                                 <form action="{{ route('role.accept', $req->id) }}" method="POST" class="inline">
                                     @csrf
@@ -142,6 +148,7 @@
                     backgroundColor: ['#22c55e', '#f59e0b', '#ef4444', '#3b82f6'],
                 }]
             }
+              //options: { plugins: { legend: { position: 'bottom' } } }
         });
 
         // Graphique Colis par mois

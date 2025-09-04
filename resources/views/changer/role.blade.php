@@ -152,8 +152,8 @@
 
                 <!-- Pièce jointe -->
                 <div class="mb-4">
-                    <label class="block font-semibold">Pièce justificatif (optionnel)</label>
-                    <input type="file" name="attachment" class="w-full border p-2 rounded">
+                    <label class="block font-semibold">Pièce justificatif</label>
+                    <input type="file" name="piece_jointe" class="w-full border p-2 rounded" required>
                 </div>
 
                 <!-- Bouton -->

@@ -16,6 +16,7 @@ return new class extends Migration
         $table->string('name'); 
         $table->string('role_demande'); // fournisseur, admin etc.
         $table->text('justification')->nullable();
+        $table->string('piece_jointe'); // chemin vers le fichier joint
         $table->enum('statut', ['en_attente', 'accepté', 'refusé'])->default('en_attente');
         $table->timestamps();
 });
