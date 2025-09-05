@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/dashboard1', [DashboardController::class, 'index'])->name('dashboard');
+//Route::get('/dashboard1', [DashboardController::class, 'index'])->name('dashboard');
 
 
 // Auth routes (doivent être accessibles sans être connecté)
